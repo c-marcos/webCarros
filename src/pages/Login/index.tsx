@@ -55,13 +55,13 @@ export const Login = () => {
         <img src={logo} alt="Logotipo" />
       </Link>
       <Form onSubmit={handleSubmit(submit)}>
-        <Input
-          error={errors.email?.message}
-          name="email"
-          type="email"
-          register={register}
-          placeholder="Digite o email..."
-        />
+          <Input
+            error={errors.email?.message}
+            name="email"
+            type="email"
+            register={register}
+            placeholder="Digite o email..."
+          />
         <Input
           error={errors.password?.message}
           name="password"
