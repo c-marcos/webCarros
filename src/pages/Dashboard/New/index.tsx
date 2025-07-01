@@ -11,10 +11,15 @@ import { TextArea } from "../../../shared/components/TextArea";
 import { useState } from "react";
 import { useLoading } from "../../../shared/hooks/useLoading";
 import { notifyAlert } from "../../../shared/utils/nitifyAlert";
+import { useUser } from "../../../shared/hooks/useUser";
+// 👇 Use a variável de ambiente
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:3000";
 
 export const DashboardNew = () => {
   const [srcImg, setSrcTmg] = useState("");
-  const {handleLoading} = useLoading();
+  const { handleLoading } = useLoading();
+  const { user } = useUser();
   const {
     register,
     handleSubmit,
@@ -24,21 +29,43 @@ export const DashboardNew = () => {
     mode: "onChange",
   });
 
-  const onSubmit = (data: TypeNewCar) => {
-    handleLoading(true);
-    console.log(data);
-    // aqui você pode enviar para o backend
+  const onSubmit = async (data: TypeNewCar) => {};
 
-    handleLoading(false)
-
-    notifyAlert('Dados enviados com sucesso.', "success")
-  };
-
-  function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
+  async function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
-    if (file) {
-      const imgURL = URL.createObjectURL(file);
-      setSrcTmg(imgURL);
+    if (!file) return;
+
+    // Novo nome do arquivo
+    const newFileName = `${user.uid}-${file.name}`;
+
+    // Criar um novo arquivo com o nome desejado
+    const renamedFile = new File([file], newFileName, {
+      type: file.type,
+    });
+
+    const formData = new FormData();
+    formData.append("image", renamedFile); // usar o arquivo renomeado
+
+    handleLoading(true);
+    try {
+      const response = await fetch(`${API_BASE_URL}/upload`, {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.url) {
+        setSrcTmg(data.url); // para mostrar preview
+        notifyAlert("Imagem enviada com sucesso!", "success");
+      } else {
+        notifyAlert("Erro ao enviar imagem", "error");
+      }
+    } catch (error) {
+      console.error(error);
+      notifyAlert("Erro na requisição", "error");
+    } finally {
+      handleLoading(false);
     }
   }
 

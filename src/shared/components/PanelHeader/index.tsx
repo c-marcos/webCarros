@@ -15,7 +15,6 @@ export const PanelHeader = () => {
     }else{
       setActive(undefined)
     }
-    console.log(location.pathname)
   },[location])
 
 
