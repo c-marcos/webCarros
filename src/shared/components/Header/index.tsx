@@ -1,22 +1,38 @@
 import logo from "../../../assets/imgs/logo.svg";
-import { HeaderStyle, MenuLogin, Nav, Menu } from "./style";
+import { HeaderStyle, MenuLogin, Nav, Menu, CustonButton } from "./style";
 import { Link, useNavigate } from "react-router-dom";
 import { useUser } from "../../hooks/useUser";
 import { FiUser, FiLogIn, FiLogOut, FiGrid } from "react-icons/fi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+
 
 export const Header = () => {
-  const { isLogged, user } = useUser();
   const [open, setOpen] = useState(false);
-  const navigate = useNavigate()
+  const { isLogged, user } = useUser();
+  const navigate = useNavigate();
+  
 
   function handleClick() {
     if (isLogged){
-      setOpen(!open);
+      setOpen(!open)
     }else{
       navigate('/login', {replace:true})
     }
   }
+
+  function handleLinkClick(e: React.MouseEvent<HTMLButtonElement, MouseEvent>){
+    navigate(`/${e.currentTarget.id}`)
+    setOpen(false)
+  }
+
+  useEffect(()=>{
+    const element = document.querySelector('main')
+    const closeMenu = () => setOpen(false);
+    element?.addEventListener('click', closeMenu)
+
+    return () => element?.removeEventListener('click', closeMenu)
+  },[])
 
   return (
     <HeaderStyle>
@@ -45,14 +61,14 @@ export const Header = () => {
         <Menu className={` menu ${open && "open"}`}>
           <ul>
             <li>
-              <Link to="/dashboard">
+              <CustonButton id="dashboard" onClick={handleLinkClick} >
                 <FiGrid /> Dashboard
-              </Link>
+              </CustonButton>
             </li>
             <li>
-              <Link to="/login">
+              <CustonButton id="login" onClick={handleLinkClick}>
                 <FiLogOut /> Sair
-              </Link>
+              </CustonButton>
             </li>
           </ul>
         </Menu>

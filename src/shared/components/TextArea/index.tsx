@@ -9,7 +9,7 @@ import type {
 } from "react-hook-form";
 import React, { useState } from "react";
 
-type Props<T extends FieldValues> = React.ComponentProps<"input"> & {
+type Props<T extends FieldValues> = React.ComponentProps<"textarea"> & {
   name: Path<T>;
   label?: string;
   register: UseFormRegister<T>;
@@ -17,7 +17,7 @@ type Props<T extends FieldValues> = React.ComponentProps<"input"> & {
   error?: string;
 };
 
-export const Input = <T extends FieldValues>({
+export const TextArea = <T extends FieldValues>({
   name,
   label,
   register,
@@ -27,7 +27,7 @@ export const Input = <T extends FieldValues>({
 }: Props<T>) => {
   const [touched, setTouched] = useState(false);
 
-  function handleOnBlur(e: React.FocusEvent<HTMLInputElement, Element>) {
+  function handleOnBlur(e: React.FocusEvent<HTMLTextAreaElement, Element>) {
     if (e.currentTarget.value.trim() !== "") {
       setTouched(true);
     }

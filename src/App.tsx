@@ -5,12 +5,13 @@ import styled from "@emotion/styled";
 import "react-toastify/dist/ReactToastify.css";
 
 function App() {
+
   return (
     <>
       <AppStyled>
-        <Header />
-        <Main>
-          <Outlet />
+        <Header/>
+        <Main id="main">
+          <Outlet  />
         </Main>
       </AppStyled>
     </>

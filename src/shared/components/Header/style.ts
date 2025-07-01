@@ -1,12 +1,11 @@
 import styled from "@emotion/styled";
 
 export const HeaderStyle = styled.header`
-  height: 72px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   background-color: #ffffff;
-  padding: 0 30px;
+  padding: 2rem 30px;
   border-bottom: 2px solid #7d7d7d;
 `;
 
@@ -45,18 +44,19 @@ export const Menu = styled.div`
   background: #7d7d7d;
   color: #ffffff;
   border-radius: 8px;
+`;
 
-  li a {
-    display: flex;
-    align-items: center;
-    margin: 10px;
-    gap: 8px;
-    padding: 0 10px;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: all 1s;
-    :hover {
-      background-color: rgb(100, 100, 100);
-    }
+export const CustonButton = styled.button`
+  display: flex;
+  align-items: center;
+  margin: 10px;
+  gap: 8px;
+  padding: 0 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 1s;
+  color: rgb(228, 228, 228);
+  :hover {
+    background-color: rgb(100, 100, 100);
   }
 `;

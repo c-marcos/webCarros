@@ -1,6 +1,7 @@
-import type { ReactNode } from "react";
 import { MainStyle } from "./style";
 
-export const Main = ({ children }: { children: ReactNode }) => {
+type Props = React.ComponentProps<'main'>
+
+export const Main = ({ children }: Props) => {
   return <MainStyle>{children}</MainStyle>;
 };
